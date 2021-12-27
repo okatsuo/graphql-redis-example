@@ -2,8 +2,12 @@ import { Book, books } from './db-books';
 import { cache } from './redis';
 
 class BooksService {
-  getAllBooks(): Book[] {
-    return books
+  async getAllBooks(): Promise<Book[]> {
+    const all_books = await cache.getOrSetCache({
+      key: 'books',
+      callback: () => books
+    })
+    return all_books
   }
 
   async getById(bookId: number): Promise<Book | undefined> {

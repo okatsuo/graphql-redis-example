@@ -28,6 +28,7 @@ class Cache {
     const data = await callback()
     if (!data) return;
     await this.client.setEx(key, expirationTime, JSON.stringify(data))
+
     return data
   }
 
